@@ -34,14 +34,12 @@ public class Main {
      * Launch the application.
      */
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Main window = new Main();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                Main window = new Main();
+                window.frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -81,34 +79,42 @@ public class Main {
 
         JButton runBtn = new JButton("Run");
         runBtn.setBounds(163, 62, 85, 21);
-        runBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == runBtn) {
-                    if (originalField.getText() != null) {
-                        if (originalField.getText().contains("a")
-                                || originalField.getText().contains("e")
-                                || originalField.getText().contains("i")
-                                || originalField.getText().contains("o")
-                                || originalField.getText().contains("u")) {
-                            newText = originalField.getText()
-                                    .replaceAll("a", "")
-                                    .replaceAll("e", "")
-                                    .replaceAll("i", "")
-                                    .replaceAll("o", "")
-                                    .replaceAll("u", "");
-                        }
-                        String output = "";
-                        for (int index = 0; index < newText.length(); index++) {
-                            if (newText.charAt(index % newText.length()) != newText
-                                    .charAt((index + 1) % newText.length())) {
-
-                                output += newText.charAt(index);
-
-                            }
-                        }
-                        textField_1.setText(output);
+        runBtn.addActionListener(e -> {
+            if (e.getSource() == runBtn) {
+                if (originalField.getText() != null) {
+                    if (originalField.getText().contains("a")
+                            || originalField.getText().contains("e")
+                            || originalField.getText().contains("i")
+                            || originalField.getText().contains("o")
+                            || originalField.getText().contains("u")
+                            || originalField.getText().contains("A")
+                            || originalField.getText().contains("E")
+                            || originalField.getText().contains("I")
+                            || originalField.getText().contains("O")
+                            || originalField.getText().contains("U")) {
+                        newText = originalField.getText()
+                                .replaceAll("a", "")
+                                .replaceAll("e", "")
+                                .replaceAll("i", "")
+                                .replaceAll("o", "")
+                                .replaceAll("u", "")
+                                .replaceAll("A", "")
+                                .replaceAll("E", "")
+                                .replaceAll("I", "")
+                                .replaceAll("O", "")
+                                .replaceAll("U", "");
+                        textField_1.setText(newText);
                     }
+                    StringBuilder output = new StringBuilder();
+                    for (int index = 0; index < newText.length(); index++) {
+                        if (newText.charAt(index % newText.length()) != newText
+                                .charAt((index + 1) % newText.length())) {
+
+                            output.append(newText.charAt(index));
+
+                        }
+                    }
+                    textField_1.setText(output.toString());
                 }
             }
         });
